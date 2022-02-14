@@ -7,13 +7,21 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * DataAdapter，这里adapterData = mutableListOf<DataModel>()
+ * adapterData处理DataModel的不同的数据类型
+ */
 class DataAdapter : RecyclerView.Adapter<DataAdapter.DataAdapterViewHolder>() {
 
     private val adapterData = mutableListOf<DataModel>()
 
+
     //--------onCreateViewHolder: inflate layout with view holder-------
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataAdapterViewHolder {
 
+        /**
+         * 应对不同类的数据结构，而对应不同的 layout
+         */
         val layout = when (viewType) {
             TYPE_FAMILY -> R.layout.item_family
             TYPE_FRIEND -> R.layout.item_friend
@@ -37,6 +45,9 @@ class DataAdapter : RecyclerView.Adapter<DataAdapter.DataAdapterViewHolder>() {
 
     override fun getItemCount(): Int = adapterData.size
 
+    /**
+     * 应对不同类的数据结构，而对应不同的 DataModel 数据类型
+     */
     override fun getItemViewType(position: Int): Int {
         return when (adapterData[position]) {
             is DataModel.Family -> TYPE_FAMILY
@@ -60,6 +71,10 @@ class DataAdapter : RecyclerView.Adapter<DataAdapter.DataAdapterViewHolder>() {
         private const val TYPE_HEADER = 3
     }
 
+    /**
+     * 这里的DataAdapterViewHolder，处理DataModel数据
+     * 对用不同DataModel结构，处理不同的页面处理
+     */
     class DataAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private fun bindFamily(item: DataModel.Family) {
@@ -88,6 +103,10 @@ class DataAdapter : RecyclerView.Adapter<DataAdapter.DataAdapterViewHolder>() {
             itemView.findViewById<AppCompatTextView>(R.id.tvNameLabel)?.text = item.title
         }
 
+        /**
+         * 应对override fun onBindViewHolder的函数
+         * 不同的dataModel类型，进行各种的绑定
+         */
         fun bind(dataModel: DataModel) {
             when (dataModel) {
                 is DataModel.Family -> bindFamily(dataModel)

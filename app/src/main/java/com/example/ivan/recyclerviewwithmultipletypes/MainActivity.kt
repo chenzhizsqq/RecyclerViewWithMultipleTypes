@@ -19,11 +19,22 @@ class MainActivity : AppCompatActivity() {
         findViewById<RecyclerView>(R.id.recyclerView)
             .apply {
                 layoutManager = LinearLayoutManager(this@MainActivity)
+
+                /**
+                 * 通过Adapter的增删改插，去刷新RecyclerView
+                 * 而不是通过adapter?.notifyItemChanged，去刷新RecyclerView
+                 */
                 hasFixedSize()
+
                 this.adapter = dataAdapter
             }
     }
 
+    /**
+     * 下面就是模拟不同数据结构的数据。
+     * 都是来自DataModel的
+     * DataModel中有多种对应不同接口的数据处理
+     */
     private fun getMockData(): List<DataModel> = listOf(
         DataModel.Header(
             bgColor = resources.getColor(R.color.family_bg),
